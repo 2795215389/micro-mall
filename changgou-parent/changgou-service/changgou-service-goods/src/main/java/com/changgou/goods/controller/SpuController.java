@@ -151,6 +151,11 @@ public class SpuController {
         return new Result(true,StatusCode.OK,"审核通过");
     }
 
+    /**
+     * 商品下架
+     * @param id
+     * @return
+     */
     @PutMapping("/pull/{id}")
     public Result pullSpu(@PathVariable(name="id")Long id){
         spuService.pullSpu(id);
