@@ -11,11 +11,8 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
-/****
- * @Author:admin
- * @Description:Sku业务层接口实现类
- * @Date 2019/6/14 0:16
- *****/
+
+
 @Service
 public class SkuServiceImpl implements SkuService {
 
@@ -201,5 +198,13 @@ public class SkuServiceImpl implements SkuService {
     @Override
     public List<Sku> findAll() {
         return skuMapper.selectAll();
+    }
+
+    @Override
+    public List<Sku> findByStatus(String status) {
+        //select * from sku where status=1
+        Sku condition = new Sku();
+        condition.setStatus(status);
+        return skuMapper.select(condition);
     }
 }

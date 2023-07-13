@@ -16,12 +16,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="changgou-service-goods" />
+        <module name="changgou-service-search-api" />
         <module name="changgou-service-goods-api" />
         <module name="changgou-eureka" />
         <module name="changgou-service-canal" />
         <module name="changgou-service-content-api" />
         <module name="changgou-service-content" />
         <module name="changgou-common-db" />
+        <module name="changgou-service-search" />
         <module name="changgou-common" />
         <module name="changgou-service-file" />
       </profile>
@@ -46,6 +48,8 @@
       <module name="changgou-service-file" options="-parameters" />
       <module name="changgou-service-goods" options="-parameters" />
       <module name="changgou-service-goods-api" options="-parameters" />
+      <module name="changgou-service-search" options="-parameters" />
+      <module name="changgou-service-search-api" options="-parameters" />
       <module name="changgou-service-tmp" options="-parameters" />
       <module name="changgou-web" options="" />
     </option>

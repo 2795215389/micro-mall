@@ -19,6 +19,7 @@
     <module>changgou-eureka</module>
     <module>changgou-web</module>
       <module>changgou-service-api/changgou-service-content-api</module>
+      <module>changgou-service-api/changgou-service-search-api</module>
   </modules>
 
   <parent>
