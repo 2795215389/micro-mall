@@ -222,7 +222,6 @@ public class SkuServiceImpl implements SkuService {
 
         if(searchMap == null || StringUtils.isEmpty(searchMap.get("category"))){
             nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("categoryList").field("categoryName"));
-
         }
         if(searchMap == null || StringUtils.isEmpty(searchMap.get("brand"))){
             nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("brandList").field("brandName"));
@@ -234,17 +233,17 @@ public class SkuServiceImpl implements SkuService {
         AggregatedPage<SkuInfo> aggregatedPage = elasticsearchTemplate.queryForPage(nativeSearchQueryBuilder.build(), SkuInfo.class);
 
         if(searchMap == null || StringUtils.isEmpty(searchMap.get("category"))){
-            StringTerms categoryTerms = aggregatedPage.getAggregations().get("categoryList");
+            StringTerms categoryTerms =(StringTerms) aggregatedPage.getAggregation("categoryList");
             List<String> categoryList = getGroupList(categoryTerms);
             cbsGroupMap.put("categoryList", categoryList);
         }
-        if(searchMap == null || StringUtils.isEmpty(searchMap.get("category"))){
-            StringTerms brandTerms = aggregatedPage.getAggregations().get("brandList");
+        if(searchMap == null || StringUtils.isEmpty(searchMap.get("brand"))){
+            StringTerms brandTerms =(StringTerms) aggregatedPage.getAggregation("brandList");
             List<String> brandList = getGroupList(brandTerms);
             cbsGroupMap.put("brandList", brandList);
         }
-        if(searchMap == null || StringUtils.isEmpty(searchMap.get("category"))){
-            StringTerms specTerms = aggregatedPage.getAggregations().get("specList");
+        if(searchMap == null || StringUtils.isEmpty(searchMap.get("spec"))){
+            StringTerms specTerms =(StringTerms) aggregatedPage.getAggregation("specList");
             List<String> specList = getGroupList(specTerms);
             Map<String, Set<String>> allSpecMap = getAllSpecMap(specList);
             cbsGroupMap.put("specList", allSpecMap);

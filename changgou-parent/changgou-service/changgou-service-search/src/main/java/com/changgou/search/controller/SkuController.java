@@ -1,7 +1,10 @@
 package com.changgou.search.controller;
+import com.alibaba.fastjson.JSON;
 import com.changgou.entity.Result;
 import com.changgou.entity.StatusCode;
 import com.changgou.search.service.SkuService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +21,15 @@ import java.util.Map;
 @RequestMapping("/search")
 public class SkuController {
 
+    Logger log = LoggerFactory.getLogger(SkuController.class);
     @Autowired
     private SkuService skuService;
 
-    @RequestMapping("/import")
+    /**
+     * 将数据导入ES
+     * @return
+     */
+    @GetMapping("/import")
     public Result importEs() {
 
         skuService.importEs();
@@ -33,15 +41,9 @@ public class SkuController {
      * @param searchMap  搜索的条件 map
      * @return  resultMap  返回的结果 map
      */
-    @PostMapping
-    public Map search(@RequestBody(required = false) Map searchMap){
-        Object pageNum = searchMap.get("pageNum");
-        if(pageNum==null){
-            searchMap.put("pageNum","1");
-        }
-        if(pageNum instanceof Integer){
-            searchMap.put("pageNum",pageNum.toString());
-        }
+    @GetMapping
+    public Map<String, Object> search(@RequestParam(required = false) Map searchMap){
+        log.info("searchMap:{}", JSON.toJSONString(searchMap));
         return skuService.search(searchMap);
     }
 }
