@@ -35,8 +35,8 @@
 							<li class="f-item"><span>企业采购</span></li>						
 							<li class="f-item"><span>关注青橙</span></li>
 							<li class="f-item"><span><a href="cooperation.html" target="_blank">合作招商</a></span></li>
-							<li class="f-item"><span><a href="shoplogin.html" target="_blank">商家后台</a></span></li>				
-							<li class="f-item"><span>网站导航</li>
+							<li class="f-item"><span><a href="shoplogin.html" target="_blank">商家后台</a></span></li>
+                            <li class="f-item"><span>网站导航</span>></li>
 						</ul>
 					</div>
 					
@@ -520,12 +520,11 @@
 					</div>
 				</div>
                 <!--点击了规格之后要隐藏-->
-				<div class="type-wrap" th:each="spec,specStat:${result.specMap}" th:unless="${#maps.containsKey(searchMap,'spec_'+spec.key)}"  >
+				<div class="type-wrap" th:each="spec,specStat:${result.specList}" th:unless="${#maps.containsKey(searchMap,'spec_'+spec.key)}"  >
 
 					<div class="fl key" th:text="${spec.key}">网络制式</div>
 					<div class="fl value">
 						<ul class="type-list">
-                            <!--Set<String>-->
 							<li th:each="op,opStat:${spec.value}">
 								<a th:href="@{${url}('spec_'+${spec.key}=${op})}" th:text="${op}"></a>
 							</li>
@@ -543,7 +542,7 @@
 								<a th:href="@{${url}(price='0-500')}">0-500元</a>
 							</li>
 							<li>
-                                <a th:href="@{${url}(price='0-500')}">500-1000元</a>
+                                <a th:href="@{${url}(price='500-1000')}">500-1000元</a>
 							</li>
 							<li>
                                 <a th:href="@{${url}(price='1000-1500')}">1000-1500元</a>
@@ -646,7 +645,7 @@
 							</li>
                             <!--active-->
                             <!--[1,2,3,4,5]-->
-							<li th:class="${page.currentpage}==${i}?'active':''" th:each="i:${#numbers.sequence(page.lpage,page.rpage)}">
+							<li th:class="(${page.currentpage}==${i}?'active':'')" th:each="i:${#numbers.sequence(page.lpage,page.rpage)}">
 								<a href="#" th:href="@{${url}(pageNum=${i})}" th:text="${i}">1</a>
 							</li>
 

@@ -25,9 +25,12 @@
         <module name="changgou-service-file" />
         <module name="changgou-service-goods" />
         <module name="changgou-service-goods-api" />
+        <module name="changgou-service-user" />
         <module name="changgou-service-canal" />
         <module name="changgou-service-content-api" />
+        <module name="changgou-service-user-api" />
         <module name="changgou-common-db" />
+        <module name="changgou-gateway-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -42,6 +45,7 @@
       <module name="changgou-common-db" options="-parameters" />
       <module name="changgou-eureka" options="-parameters" />
       <module name="changgou-gateway" options="" />
+      <module name="changgou-gateway-web" options="-parameters" />
       <module name="changgou-service" options="" />
       <module name="changgou-service-api" options="" />
       <module name="changgou-service-api-goods-api" options="-parameters" />
@@ -54,6 +58,8 @@
       <module name="changgou-service-search" options="-parameters" />
       <module name="changgou-service-search-api" options="-parameters" />
       <module name="changgou-service-tmp" options="-parameters" />
+      <module name="changgou-service-user" options="-parameters" />
+      <module name="changgou-service-user-api" options="-parameters" />
       <module name="changgou-web" options="" />
       <module name="changgou-web-search" options="-parameters" />
       <module name="itheima-springboot-thymeleaf" options="-parameters" />

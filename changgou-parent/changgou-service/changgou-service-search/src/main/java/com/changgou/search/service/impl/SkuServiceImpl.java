@@ -79,6 +79,11 @@ public class SkuServiceImpl implements SkuService {
         // BoolQuery: must,must_not,should,filter
         NativeSearchQueryBuilder nativeSearchQueryBuilder = getSearchQueryBuilder(searchMap);
 
+        // 分页
+        // 分页,给定默认值
+        Integer pageNum = searchMap.get("pageNum") == null ? 1 : Integer.parseInt(searchMap.get("pageNum"));
+        Integer pageSize = searchMap.get("pageSize") == null ? 10 : Integer.parseInt(searchMap.get("pageSize"));
+        nativeSearchQueryBuilder.withPageable(PageRequest.of(pageNum - 1, pageSize));
 
         // 高亮 <em style = ""> </em>
         HighlightBuilder.Field field = new HighlightBuilder.Field("name");
@@ -108,29 +113,32 @@ public class SkuServiceImpl implements SkuService {
         // 优化,只向ES发送一次请求
         Map<String, Object> cbsGroupMap = searchCbsGroup(nativeSearchQueryBuilder, searchMap);
         resultMap.putAll(cbsGroupMap);
+        // 放入分页参数，解决feign调用出现空指针问题
+        resultMap.put("pageNum", pageNum);
+        resultMap.put("pageSize", pageSize);
         return resultMap;
     }
 
     private  NativeSearchQueryBuilder getSearchQueryBuilder(Map<String, String> searchMap) {
         //创建查询对象 的构建对象
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
-        // BoolQuery: must,must_not,should,filter
+        // BoolQuery: must,must_not,should,filter；用must会算分，filter不算分性能更好
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
         //搜索框关键字
         if(!CollectionUtils.isEmpty(searchMap)){
             String keywords = searchMap.get("keywords");
             if (!StringUtils.isEmpty(keywords)) {
-                // 设置查询的条件:根据【搜搜框输入的关键词】搜索
-                boolQueryBuilder.must(QueryBuilders.queryStringQuery(keywords).field("name"));
+                // 设置查询的条件:根据【搜搜框输入的关键词】搜索;
+                boolQueryBuilder.filter(QueryBuilders.queryStringQuery(keywords).field("name"));
             }
             // 用户选择了种类，品牌等，缩小范围。不需要分词用term
             if (!StringUtils.isEmpty(searchMap.get("category"))) {
-                boolQueryBuilder.must(QueryBuilders.termQuery("categoryName", "category"));
+                boolQueryBuilder.filter(QueryBuilders.termQuery("categoryName", searchMap.get("category")));
             }
 
             if (!StringUtils.isEmpty(searchMap.get("brand"))) {
-                boolQueryBuilder.must(QueryBuilders.termQuery("brandName", "brand"));
+                boolQueryBuilder.filter(QueryBuilders.termQuery("brandName", searchMap.get("brand")));
             }
             // 规格有很多种，加一个前缀判断spec_xxx
             for (Map.Entry<String, String> entry : searchMap.entrySet()) {
@@ -155,20 +163,16 @@ public class SkuServiceImpl implements SkuService {
                 if(prices.length == 2){
                     boolQueryBuilder.must(QueryBuilders.rangeQuery("price").lt(Integer.valueOf(prices[1])));
                 }
-                // 分页,给定默认值
-                Integer pageNum = searchMap.get("pageNum") == null ? 1 : Integer.parseInt(searchMap.get("pageNum"));
-                Integer pageSize = searchMap.get("pageSize") == null ? 30 : Integer.parseInt(searchMap.get("pageSize"));
-                nativeSearchQueryBuilder.withPageable(PageRequest.of(pageNum - 1, pageSize));
-
-                // 排序实现【综合，销量，价格...】，升序降序
-                String sortFiled = searchMap.get("sortFiled");
-                String sortRule = searchMap.get("sortRule");
-                if (!StringUtils.isEmpty(sortFiled) && !StringUtils.isEmpty(sortRule)) {
-                    // 指定【排序域，排序规则】
-                    nativeSearchQueryBuilder.withSort(new FieldSortBuilder(sortFiled).order(SortOrder.valueOf(sortRule)));
-                }
             }
 
+
+            // 排序实现【综合，销量，价格...】，升序降序
+            String sortFiled = searchMap.get("sortFiled");
+            String sortRule = searchMap.get("sortRule");
+            if (!StringUtils.isEmpty(sortFiled) && !StringUtils.isEmpty(sortRule)) {
+                // 指定【排序域，排序规则】
+                nativeSearchQueryBuilder.withSort(new FieldSortBuilder(sortFiled).order(SortOrder.valueOf(sortRule)));
+            }
         }
 
         // 填充NativeQuery对象
@@ -212,6 +216,7 @@ public class SkuServiceImpl implements SkuService {
         resultMap.put("rows", skuPage.getContent());
         resultMap.put("total", skuPage.getTotalElements());
         resultMap.put("totalPages", skuPage.getTotalPages());
+
         return resultMap;
     }
 

@@ -27,7 +27,10 @@ public class SkuController {
     @GetMapping("/list")
     public String search(@RequestParam(required = false) Map<String, String> searchMap, Model model) {
         //1.调用搜索微服务的 feign  根据搜索的条件参数 查询 数据
-        Map resultmap = skuFeign.search(searchMap);
+        Map<String, Object> resultmap = skuFeign.search(searchMap);
+
+
+
         log.info("resultMap:{}", JSON.toJSONString(resultmap));
 
         //2.将数据设置到model中     (模板文件中 根据th:标签数据展示)
