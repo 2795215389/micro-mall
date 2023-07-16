@@ -1,0 +1,4 @@
+com\changgou\GatewayWebApplication$1.class
+com\changgou\util\JwtUtil.class
+com\changgou\filter\AuthorizeFilter.class
+com\changgou\GatewayWebApplication.class

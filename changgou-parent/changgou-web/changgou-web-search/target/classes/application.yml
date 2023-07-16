@@ -1,0 +1,28 @@
+server:
+  port: 18088
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+spring:
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/static/
+  thymeleaf:
+    cache: false # 不缓存，防止干扰
+    prefix: classpath:/templates/
+    suffix: .html
+    servlet:
+      content-type: text/html
+    encoding: UTF-8
+    mode: text/html
+  application:
+    name: search-web
+#  main:
+#    allow-bean-definition-overriding: true
