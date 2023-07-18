@@ -1,0 +1,15 @@
+com\changgou\oauth\service\impl\AuthServiceImpl.class
+com\changgou\oauth\config\CustomUserAuthenticationConverter.class
+com\changgou\oauth\service\AuthService.class
+com\changgou\oauth\service\impl\AuthServiceImpl$1.class
+com\changgou\oauth\service\LoginService.class
+com\changgou\oauth\util\CookieUtil.class
+com\changgou\oauth\config\AuthorizationServerConfig.class
+com\changgou\OAuthApplication.class
+com\changgou\oauth\controller\AuthController.class
+com\changgou\oauth\util\AuthToken.class
+com\changgou\oauth\config\WebSecurityConfig.class
+com\changgou\oauth\config\UserDetailsServiceImpl.class
+com\changgou\oauth\controller\UserLoginController.class
+com\changgou\oauth\util\UserJwt.class
+com\changgou\oauth\service\impl\LoginServiceImpl.class
