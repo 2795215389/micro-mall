@@ -23,6 +23,7 @@
       <module>changgou-web/changgou-web-search</module>
       <module>changgou-gateway/changgou-gateway-web</module>
       <module>changgou-service-api/changgou-service-user-api</module>
+      <module>changgou-user-oauth</module>
   </modules>
 
   <parent>

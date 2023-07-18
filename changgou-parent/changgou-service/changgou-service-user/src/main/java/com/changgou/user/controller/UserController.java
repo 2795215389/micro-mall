@@ -9,6 +9,7 @@ import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 
 
 @RestController
@@ -118,18 +120,38 @@ public class UserController {
         return new Result<User>(true, StatusCode.OK, "查询成功", user);
     }
 
+    /**
+     * 加载用户的数据,先对该方法放行，因为Oauth2.0要使用feign查询user数据库
+     * @param id
+     * @return
+     */
+    @GetMapping("/load/{id}")
+    public Result<User> findByUsername(@PathVariable(name="id") String id) {
+        //调用UserService实现根据主键查询User
+        User user = userService.findById(id);
+        return new Result<User>(true, StatusCode.OK, "查询成功", user);
+    }
+
     /***
+     *
+     * 希望 拥有admin的角色人才能访问.
      * 查询User全部数据
      * @return
      */
+    @PreAuthorize(value="hasAuthority('goods_list')")
+    // @PreAuthorize 表示 在执行方法之前 先进行权限校验,只有拥有 admin角色的用户可以执行该方法.
     @GetMapping
-    public Result<List<User>> findAll() {
+    public Result<List<User>> findAll(HttpServletRequest request) {
+
+        System.out.println("头信息为:"+request.getHeader("Authorization"));
+
+
         //调用UserService实现查询所有User
         List<User> list = userService.findAll();
         return new Result<List<User>>(true, StatusCode.OK, "查询成功", list);
     }
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public Result<User> login(String username, String password, HttpServletResponse response, HttpServletRequest request) {
         //1.从数据库中查询用户名对应的用户的对象
         User user = userService.findById(username);
@@ -139,7 +161,7 @@ public class UserController {
         }
 
         //3如果不为空格 判断 密码是否正确 正确则登录成功
-                        // 明文         密文
+
         if(BCrypt.checkpw(password,user.getPassword())){
             //成功
             Map<String,Object> info = new HashMap<String,Object>();
@@ -151,8 +173,6 @@ public class UserController {
             String jwt = JwtUtil.createJWT(UUID.randomUUID().toString(), JSON.toJSONString(info), null);
             //2.设置cookie中
             Cookie cookie = new Cookie("Authorization",jwt);
-            cookie.setDomain("localhost");
-            cookie.setPath("/");
             response.addCookie(cookie);
             //3.设置头文件中
             response.setHeader("Authorization",jwt);

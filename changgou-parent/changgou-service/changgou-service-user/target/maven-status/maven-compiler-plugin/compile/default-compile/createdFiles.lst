@@ -24,6 +24,7 @@ com\changgou\user\service\UserService.class
 com\changgou\user\dao\OauthClientDetailsMapper.class
 com\changgou\user\service\impl\UndoLogServiceImpl.class
 com\changgou\user\controller\UserController.class
+com\changgou\user\config\ResourceServerConfig.class
 com\changgou\user\dao\AreasMapper.class
 com\changgou\user\service\AreasService.class
 com\changgou\user\service\UndoLogService.class
