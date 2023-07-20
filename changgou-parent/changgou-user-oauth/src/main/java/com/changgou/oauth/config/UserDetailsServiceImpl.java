@@ -68,7 +68,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         String pwd =userResult.getData().getPassword();
         //创建User对象  授予权限.GOODS_LIST  SECKILL_LIST;最好在数据库中设计
-        String permissions = "goods_list,seckill_list";
+        // String permissions = "goods_list,seckill_list";
+        String permissions = "user,vip,admin";
 
 
         UserJwt userDetails = new UserJwt(username,pwd,AuthorityUtils.commaSeparatedStringToAuthorityList(permissions));

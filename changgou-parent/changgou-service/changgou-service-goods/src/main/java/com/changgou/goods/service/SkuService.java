@@ -1,6 +1,7 @@
 package com.changgou.goods.service;
 
 import com.changgou.goods.pojo.Sku;
+import com.changgou.order.pojo.OrderItem;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -73,4 +74,6 @@ public interface SkuService {
      * @return
      */
     List<Sku> findByStatus(String status);
+
+    int derCount(OrderItem orderItem);
 }

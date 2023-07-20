@@ -42,10 +42,12 @@ public class LoginServiceImpl implements LoginService {
         //1.定义url (申请令牌的url)
         //参数 : 微服务的名称spring.appplication指定的名称
         ServiceInstance choose = loadBalancerClient.choose("user-auth");
+        // 这个url会调到UserDetailsServiceImpl自定义授权认证中去请求token
         String url =choose.getUri().toString()+"/oauth/token";
 
         //2.定义头信息 (有client id 和client secr)
         MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
+        // 客户端ID，客户端秘钥
         headers.add("Authorization","Basic "+Base64.getEncoder().encodeToString(new String(clientId+":"+clientSecret).getBytes()));
         //3. 定义请求体  有授权模式 用户的名称 和密码
         MultiValueMap<String,String> formData = new LinkedMultiValueMap<>();
@@ -65,8 +67,7 @@ public class LoginServiceImpl implements LoginService {
         //5.接收到返回的响应(就是:令牌的信息)
         Map<String, String> body = responseEntity.getBody();
 
-        //封装一次.
-
+        // 将取得的令牌信息封装成对象
         AuthToken authToken = new AuthToken();
         //访问令牌(jwt)
         String accessToken = body.get("access_token");

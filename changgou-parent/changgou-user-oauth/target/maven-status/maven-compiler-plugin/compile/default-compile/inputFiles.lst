@@ -1,10 +1,12 @@
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\service\impl\AuthServiceImpl.java
+F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\util\AdminToken.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\util\AuthToken.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\controller\UserLoginController.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\controller\AuthController.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\util\UserJwt.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\service\AuthService.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\service\impl\LoginServiceImpl.java
+F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\intercept\TokenRequestInterceptor.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\config\AuthorizationServerConfig.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\service\LoginService.java
 F:\codingDemo\changgou\changgou-parent\changgou-user-oauth\src\main\java\com\changgou\oauth\config\CustomUserAuthenticationConverter.java

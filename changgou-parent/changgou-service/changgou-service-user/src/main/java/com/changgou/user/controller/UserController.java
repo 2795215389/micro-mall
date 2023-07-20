@@ -138,8 +138,8 @@ public class UserController {
      * 查询User全部数据
      * @return
      */
-    @PreAuthorize(value="hasAuthority('goods_list')")
     // @PreAuthorize 表示 在执行方法之前 先进行权限校验,只有拥有 admin角色的用户可以执行该方法.
+    @PreAuthorize(value="hasAuthority('admin')")
     @GetMapping
     public Result<List<User>> findAll(HttpServletRequest request) {
 
@@ -183,10 +183,15 @@ public class UserController {
             return new Result<User>(false, StatusCode.LOGINERROR, "用户名或密码错误");
         }
 
+    }
 
 
 
+    @GetMapping(value = "/points/add")
+    public Result addPoints(@RequestParam(value="points") Integer points
+            ,@RequestParam(value="username") String username ) {
 
-
+        userService.addPoints(points,username);
+        return new Result(true,StatusCode.OK,"添加积分成功");
     }
 }

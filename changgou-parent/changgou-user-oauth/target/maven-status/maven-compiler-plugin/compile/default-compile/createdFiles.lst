@@ -1,5 +1,7 @@
 com\changgou\oauth\service\impl\AuthServiceImpl.class
 com\changgou\oauth\config\CustomUserAuthenticationConverter.class
+com\changgou\oauth\util\AdminToken.class
+com\changgou\oauth\intercept\TokenRequestInterceptor.class
 com\changgou\oauth\service\AuthService.class
 com\changgou\oauth\service\impl\AuthServiceImpl$1.class
 com\changgou\oauth\service\LoginService.class

@@ -24,6 +24,7 @@
       <module>changgou-gateway/changgou-gateway-web</module>
       <module>changgou-service-api/changgou-service-user-api</module>
       <module>changgou-user-oauth</module>
+      <module>changgou-service-api/changgou-service-order-api</module>
   </modules>
 
   <parent>

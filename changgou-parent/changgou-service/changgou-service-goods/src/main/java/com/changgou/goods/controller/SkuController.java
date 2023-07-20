@@ -4,6 +4,7 @@ import com.changgou.entity.Result;
 import com.changgou.entity.StatusCode;
 import com.changgou.goods.pojo.Sku;
 import com.changgou.goods.service.SkuService;
+import com.changgou.order.pojo.OrderItem;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -121,11 +122,19 @@ public class SkuController {
         return new Result<List<Sku>>(true, StatusCode.OK,"查询成功",list) ;
     }
 
-
     //根据状态 查询状态为1 的所有的符合条件的sku的列表数据返回
     @GetMapping("/status/{status}")
     public Result<List<Sku>> findByStatus(@PathVariable(name="status") String status){
         List<Sku> skusList = skuService.findByStatus(status);
         return new Result<List<Sku>>(true,StatusCode.OK,"查询sku列表成功",skusList);
     }
+
+
+    @PostMapping(value = "/decr/count")
+    public Result decrCount(@RequestBody  OrderItem orderItem){
+        skuService.derCount(orderItem);
+        return new Result(true,StatusCode.OK,"减少库存成功");
+    }
+
+
 }
