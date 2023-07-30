@@ -10,6 +10,19 @@ import java.util.Date;
 @Table(name="tb_user")
 public class User implements Serializable{
 
+	/**
+	 * 人脸地址
+	 */
+	private String pic;
+
+	public String getPic() {
+		return pic;
+	}
+
+	public void setPic(String pic) {
+		this.pic = pic;
+	}
+
 	@Id
     @Column(name = "username")
 	private String username;//用户名
