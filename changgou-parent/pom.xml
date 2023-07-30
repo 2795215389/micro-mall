@@ -25,6 +25,10 @@
       <module>changgou-service-api/changgou-service-user-api</module>
       <module>changgou-user-oauth</module>
       <module>changgou-service-api/changgou-service-order-api</module>
+      <module>changgou-service/changgou-service-pay</module>
+    <module>changgou-service-api/changgou-service-seckill-api</module>
+    <module>changgou-service/changgou-service-seckill</module>
+      <module>changgou-service-api/changgou-service-pay-api</module>
   </modules>
 
   <parent>
@@ -74,6 +78,12 @@
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt</artifactId>
       <version>0.9.1</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
 
     <!--

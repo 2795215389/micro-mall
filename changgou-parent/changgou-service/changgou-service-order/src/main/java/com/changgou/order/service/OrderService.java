@@ -5,13 +5,21 @@ import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
-/****
- * @Author:admin
- * @Description:Order业务层接口
- * @Date 2019/6/14 0:16
- *****/
-public interface OrderService {
 
+public interface OrderService {
+    /**
+     * 回滚
+     * @param orderId
+     * @param transactionid
+     */
+    void rollBackOrder(String orderId,String transactionid);
+
+    /**
+     * 修改订单状态
+     * @param orderId
+     * @param transactionid
+     */
+    void updateStatus(String orderId,String transactionid);
     /***
      * Order多条件分页查询
      * @param order

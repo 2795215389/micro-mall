@@ -10,6 +10,7 @@ import com.changgou.order.service.OrderService;
 import com.changgou.user.feign.UserFeign;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,18 +20,65 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.Date;
 import java.util.List;
 
-/****
- * @Author:admin
- * @Description:Order业务层接口实现类
- * @Date 2019/6/14 0:16
- *****/
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private SkuFeign skuFeign;
 
+    @Autowired
+    private IdWorker idWorker;
+
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private UserFeign userFeign;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    /**
+     * 回滚
+     */
+    @Override
+    public void rollBackOrder(String orderId, String transactionid) {
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        Example example = new Example(OrderItem.class);
+        example.createCriteria().andEqualTo("order_no",order.getId());
+        List<OrderItem> orderItems = orderItemMapper.selectByExample(example);
+        for (OrderItem orderItem : orderItems) {
+            skuFeign.incrCount(orderItem);
+        }
+
+        // 向微信发送请求,取消订单，付款码失效
+    }
+
+    /***
+     * 订单修改
+     * @param orderId
+     * @param transactionid  微信支付的交易流水号
+     */
+    @Override
+    public void updateStatus(String orderId,String transactionid) {
+        //1.修改订单
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        order.setUpdateTime(new Date());    //时间也可以从微信接口返回过来，这里为了方便，我们就直接使用当前时间了
+        order.setPayTime(order.getUpdateTime());    //不允许这么写
+        order.setTransactionId(transactionid);  //交易流水号
+        order.setPayStatus("1");    //已支付
+        orderMapper.updateByPrimaryKeySelective(order);
+
+        //2.删除Redis中的订单记录
+        redisTemplate.boundHashOps("Order").delete(orderId);
+    }
     /**
      * Order条件+分页查询
      *
@@ -222,21 +270,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    @Autowired
-    private IdWorker idWorker;
 
-    @Autowired
-    private OrderItemMapper orderItemMapper;
-
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private SkuFeign skuFeign;
-
-
-    @Autowired
-    private UserFeign userFeign;
     /**
      * 增加Order
      *
@@ -278,8 +312,7 @@ public class OrderServiceImpl implements OrderService {
         order.setIsDelete("0");//未删除
         orderMapper.insertSelective(order);
 
-        //4.增加积分  调用用户微服务的userfeign 增加积分
-
+        //4.增加积分  调用用户微服务的userfeign 增加积分,可以异步
         userFeign.addPoints(10,order.getUsername());
 
 

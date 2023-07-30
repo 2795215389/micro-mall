@@ -8,14 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * 描述
- *
- * @author www.itheima.com
- * @version 1.0
- * @package com.changgou.goods.feign *
- * @since 1.0
- */
+
 @FeignClient(value="goods")
 @RequestMapping("/sku")
 public interface SkuFeign {
@@ -44,6 +37,9 @@ public interface SkuFeign {
 
     @PostMapping(value = "/decr/count")
     public Result decrCount(@RequestBody OrderItem orderItem);
+
+    @PostMapping(value = "incr/count")
+    public Result incrCount(@RequestBody OrderItem orderItem);
 
 
 

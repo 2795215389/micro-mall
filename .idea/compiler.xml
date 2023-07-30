@@ -11,6 +11,7 @@
       <directory url="file://$PROJECT_DIR$/changgou-parent/changgou-web/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -19,6 +20,7 @@
         <module name="changgou-eureka" />
         <module name="springboot-thymeleaf" />
         <module name="changgou-user-oauth" />
+        <module name="changgou-service-pay-api" />
         <module name="changgou-web-search" />
         <module name="changgou-service-content" />
         <module name="changgou-service-search" />
@@ -27,11 +29,14 @@
         <module name="changgou-service-file" />
         <module name="changgou-service-goods" />
         <module name="changgou-service-goods-api" />
+        <module name="changgou-service-seckill-api" />
         <module name="changgou-service-user" />
         <module name="changgou-service-canal" />
+        <module name="changgou-service-pay" />
         <module name="changgou-service-content-api" />
         <module name="changgou-service-user-api" />
         <module name="changgou-common-db" />
+        <module name="changgou-service-seckill" />
         <module name="changgou-gateway-web" />
         <module name="changgou-service-order-api" />
       </profile>
@@ -60,8 +65,12 @@
       <module name="changgou-service-goods-api" options="-parameters" />
       <module name="changgou-service-order" options="-parameters" />
       <module name="changgou-service-order-api" options="-parameters" />
+      <module name="changgou-service-pay" options="-parameters" />
+      <module name="changgou-service-pay-api" options="-parameters" />
       <module name="changgou-service-search" options="-parameters" />
       <module name="changgou-service-search-api" options="-parameters" />
+      <module name="changgou-service-seckill" options="-parameters" />
+      <module name="changgou-service-seckill-api" options="-parameters" />
       <module name="changgou-service-tmp" options="-parameters" />
       <module name="changgou-service-user" options="-parameters" />
       <module name="changgou-service-user-api" options="-parameters" />
