@@ -4,6 +4,7 @@ import com.changgou.seckill.pojo.SeckillOrder;
 import com.changgou.seckill.pojo.SeckillStatus;
 import com.github.pagehelper.PageInfo;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /****
@@ -77,7 +78,7 @@ public interface SeckillOrderService {
      * @param username
      * @return
      */
-    boolean add(Long id, String time, String username);
+    boolean add(Long id, String time, String username) throws UnsupportedEncodingException;
 
     /**
      * 查询状态

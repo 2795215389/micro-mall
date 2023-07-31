@@ -31,6 +31,8 @@ public class SeckillGoodsPushTask {
     private RedisTemplate redisTemplate;
 
     //反复被执行的方法 隔5秒钟执行一次
+    // 在现实中应该在CPU和内存使用低峰，比如凌晨2点执行
+    //@Scheduled(cron = "0/* * 2 * * ?")
     @Scheduled(cron = "0/5 * * * * ?")
     public void loadGoodsPushRedis() {
         //1.获取当前的时间对应的5个时间段,当前时间段为区间开始
@@ -70,16 +72,15 @@ public class SeckillGoodsPushTask {
                 //设置有效期
                 redisTemplate.expireAt(SystemConstants.SEC_KILL_GOODS_PREFIX + extName,DateUtil.addDateHour(starttime, 2));
 
-                //超卖问题，用队列维护商品数量，商品数据压入队列中
-                pushGoods(seckillGood);
+                //超卖问题，用队列维护商品数量，信号量
+                redisTemplate.opsForValue().set(SystemConstants.SEC_KILL_OVER_SALE_SEMAPHORE+seckillGood.getId(), seckillGood.getStockCount());
+                // pushGoods(seckillGood);
 
                 //添加一个计数器 (key:商品的ID  value : 库存数)
                 redisTemplate.boundHashOps(SystemConstants.SECK_KILL_GOODS_COUNT_KEY).increment(seckillGood.getId(),seckillGood.getStockCount());
 
-                redisTemplate.opsForValue().set(SystemConstants.SEC_KILL_OVER_SALE_SEMAPHORE+seckillGood.getId(), seckillGood.getStockCount());
+
             }
-            // 超卖问题，库存信号量
-                redisTemplate.expireAt(SystemConstants.SEC_KILL_OVER_SALE_SEMAPHORE,  DateUtil.addDateHour(starttime, 2));
 
 
 

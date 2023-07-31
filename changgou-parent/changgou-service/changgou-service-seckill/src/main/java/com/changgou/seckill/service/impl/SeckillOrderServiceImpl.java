@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -199,7 +200,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
      * @return
      */
     @Override
-    public boolean add(Long id, String time, String username) {
+    public boolean add(Long id, String time, String username) throws UnsupportedEncodingException {
 
 
         // Redis服务线程单线程特性：解决用户重复抢单问题;
@@ -227,7 +228,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
         redisTemplate.boundHashOps(SystemConstants.SEC_KILL_USER_STATUS_KEY).put(username,seckillStatus);
 
         //多线程下单
-        multiThreadingCreateOrder.createrOrder();
+        multiThreadingCreateOrder.createOrderNew();
 
         return true;
     }
@@ -259,7 +260,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
         //支付时间
         seckillOrder.setPayTime(new Date());
         //同步到MySQL中
-        seckillOrderMapper.insertSelective(seckillOrder);
+        seckillOrderMapper.updateByPrimaryKey(seckillOrder);
 
         //清空Redis缓存，预订单
         redisTemplate.boundHashOps(SystemConstants.SEC_KILL_ORDER_KEY).delete(username);
@@ -299,7 +300,6 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
             Long surplusCount = redisTemplate.boundHashOps(SystemConstants.SECK_KILL_GOODS_COUNT_KEY).increment(seckillStatus.getGoodsId(), 1);
             redisTemplate.opsForValue().increment(SystemConstants.SEC_KILL_OVER_SALE_SEMAPHORE+seckillGoods.getId());
             seckillGoods.setStockCount(surplusCount.intValue());
-            redisTemplate.boundListOps("SeckillGoodsCountList_" + seckillStatus.getGoodsId()).leftPush(seckillStatus.getGoodsId());
 
             //4)数据同步到Redis中
             redisTemplate.boundHashOps(SystemConstants.SEC_KILL_GOODS_PREFIX+seckillStatus.getTime()).put(seckillStatus.getGoodsId(),seckillGoods);
