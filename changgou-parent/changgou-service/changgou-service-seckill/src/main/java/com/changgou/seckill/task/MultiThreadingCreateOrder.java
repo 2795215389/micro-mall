@@ -1,18 +1,26 @@
 package com.changgou.seckill.task;
 
+import com.alibaba.fastjson.JSON;
 import com.changgou.entity.IdWorker;
 import com.changgou.entity.SystemConstants;
 import com.changgou.seckill.dao.SeckillGoodsMapper;
+import com.changgou.seckill.dao.SeckillOrderMapper;
 import com.changgou.seckill.pojo.SeckillGoods;
 import com.changgou.seckill.pojo.SeckillOrder;
 import com.changgou.seckill.pojo.SeckillStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Component
@@ -28,8 +36,14 @@ public class MultiThreadingCreateOrder {
     @Autowired
     private SeckillGoodsMapper seckillGoodsMapper;
 
+    @Autowired
+    private SeckillOrderMapper seckillOrderMapper;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     @Async
-    public void createOrderNew() {
+    public void createOrderNew() throws UnsupportedEncodingException {
         //从队列中获取抢单信息()
         SeckillStatus seckillStatus = (SeckillStatus) redisTemplate.boundListOps(SystemConstants.SEC_KILL_USER_QUEUE_KEY).rightPop();
         if (seckillStatus == null) {
@@ -62,17 +76,20 @@ public class MultiThreadingCreateOrder {
         seckillOrder.setStatus("0");//未支付
         // 存储预订单
         redisTemplate.boundHashOps(SystemConstants.SEC_KILL_ORDER_KEY).put(username, seckillOrder);
+        // 同步预订单
+        seckillOrderMapper.insertSelective(seckillOrder);
 
-        stockSemaphore = Long.valueOf(redisTemplate.opsForValue().get(SystemConstants.SEC_KILL_OVER_SALE_SEMAPHORE+goodsId).toString());
+        Long surplusCount = redisTemplate.boundHashOps(SystemConstants.SECK_KILL_GOODS_COUNT_KEY).increment(goodsId, -1);//商品数量递减
 
-        if (stockSemaphore <= 0) {
+        if (surplusCount <= 0) {
             seckillGoods.setStockCount(0);
             seckillGoodsMapper.updateByPrimaryKeySelective(seckillGoods);//数据库的库存更新为0
             // 删除Redis Hash中的该商品
             redisTemplate.boundHashOps(SystemConstants.SEC_KILL_GOODS_PREFIX + time).delete(goodsId);
         } else {
             // 库存写回到Redis,不从map里面拿，因为下面操作非原子，不准确
-            seckillGoods.setStockCount(stockSemaphore.intValue());
+            seckillGoods.setStockCount(surplusCount.intValue());
+            seckillGoodsMapper.updateByPrimaryKeySelective(seckillGoods);
             redisTemplate.boundHashOps(SystemConstants.SEC_KILL_GOODS_PREFIX+time).put(goodsId, seckillGoods);
         }
         // 抢单成功，更新状态，排队-->未支付
@@ -80,6 +97,14 @@ public class MultiThreadingCreateOrder {
         seckillStatus.setOrderId(seckillOrder.getId());
         seckillStatus.setMoney(seckillOrder.getMoney().floatValue());
         redisTemplate.boundHashOps(SystemConstants.SEC_KILL_USER_STATUS_KEY).put(username,seckillStatus);
+
+
+        // 发送延时消息【用户名，订单号】
+        Map<String, String> messageMap = new HashMap<>();
+        messageMap.put("username",username);
+        messageMap.put("orderId",seckillOrder.getId().toString());
+        Message message = MessageBuilder.withBody(JSON.toJSONString(messageMap).getBytes("UTF-8")).setExpiration(Integer.valueOf(10 * 60 * 1000).toString()).build();
+        rabbitTemplate.convertAndSend("exchange.seckillorder","routingKey.seckillorder",message);
     }
 
 

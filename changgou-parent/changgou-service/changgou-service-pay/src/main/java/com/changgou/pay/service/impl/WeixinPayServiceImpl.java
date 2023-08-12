@@ -5,8 +5,6 @@ import com.changgou.entity.HttpClient;
 import com.changgou.pay.config.TokenDecode;
 import com.changgou.pay.service.WeixinPayService;
 import com.github.wxpay.sdk.WXPayUtil;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -98,12 +96,6 @@ public class WeixinPayServiceImpl implements WeixinPayService {
             resultMap.put("total_fee",total_fee);
             resultMap.put("code_url",allMap.get("code_url"));
 
-            // 发送延时消息【用户名，订单号】
-            Map<String, String> messageMap = new HashMap<>();
-            messageMap.put("username",username);
-            messageMap.put("orderId",out_trade_no);
-            Message message = MessageBuilder.withBody(JSON.toJSONString(messageMap).getBytes("UTF-8")).setExpiration(Integer.valueOf(10 * 60 * 1000).toString()).build();
-            rabbitTemplate.convertAndSend(exchange,routingKey,message);
             return resultMap;
 
         } catch (Exception e) {

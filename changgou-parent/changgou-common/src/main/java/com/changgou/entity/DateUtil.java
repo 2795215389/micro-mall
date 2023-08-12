@@ -93,7 +93,7 @@ public class DateUtil {
 
         //当前需要显示的时间菜单
         List<Date> dateMenus = new ArrayList<Date>();
-        for (int i = 0; i <5 ; i++) {
+        for (int i = 0; i <12 ; i++) {
             dateMenus.add(addDateHour(now,i*2));
         }
         return dateMenus;
