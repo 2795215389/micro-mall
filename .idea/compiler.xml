@@ -36,6 +36,7 @@
         <module name="changgou-web-search" />
         <module name="changgou-service-order" />
         <module name="changgou-service-goods" />
+        <module name="changgou-nacos" />
         <module name="changgou-service-user-api" />
         <module name="changgou-common-db" />
         <module name="changgou-service-seckill" />
@@ -56,6 +57,7 @@
       <module name="changgou-eureka" options="-parameters" />
       <module name="changgou-gateway" options="" />
       <module name="changgou-gateway-web" options="-parameters" />
+      <module name="changgou-nacos" options="-parameters" />
       <module name="changgou-service" options="" />
       <module name="changgou-service-api" options="" />
       <module name="changgou-service-api-goods-api" options="-parameters" />

@@ -30,6 +30,7 @@
     <module>changgou-service/changgou-service-seckill</module>
       <module>changgou-service-api/changgou-service-pay-api</module>
       <module>changgou-service-api/changgou-service-log-api</module>
+      <module>changgou-nacos</module>
   </modules>
 
   <parent>

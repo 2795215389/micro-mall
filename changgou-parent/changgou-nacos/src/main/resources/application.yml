@@ -1,0 +1,7 @@
+logging:
+  level:
+    com.js: debug
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+pattern:
+  name: 本地环境local
