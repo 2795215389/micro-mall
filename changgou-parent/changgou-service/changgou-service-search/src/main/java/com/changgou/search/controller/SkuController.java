@@ -46,4 +46,7 @@ public class SkuController {
         log.info("searchMap:{}", JSON.toJSONString(searchMap));
         return skuService.search(searchMap);
     }
+
+
+
 }

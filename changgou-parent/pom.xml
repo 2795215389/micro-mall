@@ -29,6 +29,7 @@
     <module>changgou-service-api/changgou-service-seckill-api</module>
     <module>changgou-service/changgou-service-seckill</module>
       <module>changgou-service-api/changgou-service-pay-api</module>
+      <module>changgou-service-api/changgou-service-log-api</module>
   </modules>
 
   <parent>

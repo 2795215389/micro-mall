@@ -4,17 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c1e31d9-11d3-4b17-a9d8-1891ea039e21" name="Changes" comment="秒杀">
-      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/src/main/java/com/changgou/entity/AIBaiduFaceBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/src/main/java/com/changgou/entity/AIConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/src/main/java/com/changgou/entity/AIFaceBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/src/main/java/com/changgou/entity/AIFactoryUtil.java" afterDir="false" />
+    <list default="true" id="2c1e31d9-11d3-4b17-a9d8-1891ea039e21" name="Changes" comment="人脸识别">
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/src/main/java/com/changgou/entity/LogType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/src/main/java/com/changgou/entity/SystemLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/src/main/java/com/changgou/entity/ThreadPoolUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-log-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-log-api/src/main/java/com/changgou/log/aop/LogType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-log-api/src/main/java/com/changgou/log/aop/SystemLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-log-api/src/main/java/com/changgou/log/feign/LogFeign.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-log-api/src/main/java/com/changgou/log/pojo/LogInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-search-api/src/main/java/com/changgou/search/pojo/LogInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/java/com/changgou/LogApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/java/com/changgou/log/aop/SaveSystemLogThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/java/com/changgou/log/aop/SystemLogAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/java/com/changgou/log/controller/LogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/java/com/changgou/log/dao/LogESMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/java/com/changgou/log/service/LogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/java/com/changgou/log/service/LogServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-log/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/changgou-parent/changgou-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/changgou-parent/changgou-common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-user-api/src/main/java/com/changgou/user/pojo/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/changgou-parent/changgou-service-api/changgou-service-user-api/src/main/java/com/changgou/user/pojo/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-user/src/main/java/com/changgou/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-user/src/main/java/com/changgou/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot-thymeleaf/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-thymeleaf/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot-thymeleaf/target/springboot-thymeleaf-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/springboot-thymeleaf/target/springboot-thymeleaf-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-search/src/main/java/com/changgou/search/controller/SkuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/changgou-service-search/src/main/java/com/changgou/search/controller/SkuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/changgou-parent/changgou-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/changgou-parent/changgou-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/changgou-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/changgou-parent/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +84,7 @@
     "WebServerToolWindowFactoryState": "false",
     "extract.method.default.visibility": "public",
     "jdk.selected.JAVA_MODULE": "1.8",
-    "last_opened_file_path": "F:/codingDemo/changgou/changgou-parent/changgou-common/src/main/java/com/changgou/entity",
+    "last_opened_file_path": "F:/codingDemo/changgou/changgou-parent/changgou-service-api/changgou-service-log-api/src/main/java/com/changgou/search/aop",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,21 +103,21 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-service-api\changgou-service-log-api\src\main\java\com\changgou\search\aop" />
+      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-service\changgou-service-log" />
+      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-service-api\changgou-service-log-api" />
+      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-service\changgou-service-goods\src\main\java\com\changgou\goods" />
       <recent name="F:\codingDemo\changgou\changgou-parent\changgou-common\src\main\java\com\changgou\entity" />
-      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-common\src" />
-      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-service\changgou-service-seckill\src\main\java\com\changgou\seckill\config" />
-      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-service\changgou-service-seckill\src\main\resources" />
-      <recent name="F:\codingDemo\changgou\changgou-parent\changgou-service\changgou-service-pay\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\codingDemo\changgou" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.changgou.pay.config" />
+      <recent name="com.changgou.log.aop" />
       <recent name="com.changgou.entity" />
+      <recent name="com.changgou.pay.config" />
       <recent name="com.changgou.user.service.impl" />
       <recent name="com.changgou.user.service" />
-      <recent name="com.changgou.user.dao" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -321,7 +335,10 @@
       <workItem from="1690597238138" duration="18018000" />
       <workItem from="1690683403447" duration="13146000" />
       <workItem from="1690707722415" duration="1339000" />
-      <workItem from="1690721977743" duration="3377000" />
+      <workItem from="1690721977743" duration="4987000" />
+      <workItem from="1690727271559" duration="4000" />
+      <workItem from="1690893173447" duration="57000" />
+      <workItem from="1691852391492" duration="2694000" />
     </task>
     <task id="LOCAL-00001" summary="项目搭建+商品操作">
       <created>1688876869275</created>
@@ -407,7 +424,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689860620695</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="人脸识别">
+      <created>1690725705681</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1690725705681</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,6 +471,7 @@
     <MESSAGE value="ES页面+登录" />
     <MESSAGE value="Oauth用户登录与授权" />
     <MESSAGE value="购物车与微服务间鉴权" />
-    <option name="LAST_COMMIT_MESSAGE" value="购物车与微服务间鉴权" />
+    <MESSAGE value="人脸识别" />
+    <option name="LAST_COMMIT_MESSAGE" value="人脸识别" />
   </component>
 </project>
